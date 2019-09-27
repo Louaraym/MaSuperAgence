@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Espace administrateur{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="text-center">Gérer les biens</h1>
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success text-center">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Titres</th>
+                <td>Actions</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for property in properties %}
+                <tr>
+                    <td>{{ property.title }}</td>
+                    <td>
+                        <a href="{{ path('admin.property.edit', {id: property.id}) }}" class="btn btn-secondary">Editer</a>
+                        <form method="post" action="{{ path('admin.property.delete', {id: property.id}) }}" style="display: inline-block"
+                              onsubmit="return confirm('Etes-vous sûr de vouloir supprimer ce bien ?')">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ property.id) }}">
+                            <button class="btn btn-danger">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+
+            {% else %}
+                Aucun bien de publié pour le moment.
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-right">
+            <a href="{{ path('admin.property.new') }}" class="btn btn-primary">Créer une nouvelle option</a>
+        </div>
+        <div class="pagination">
+            {{ knp_pagination_render(properties) }}
+        </div>
+    </div>
+{% endblock %}

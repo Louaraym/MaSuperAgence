@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="jumbotron text-center">
+        <div class="container">
+            <h1>Bienvenue sur  Ma Super Agence !</h1>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium asperiores, facere iusto odit optio sed
+                voluptate? Autem deserunt distinctio iure laudantium, minus nam, nemo nihil nobis nostrum praesentium quisquam
+                rerum.
+            </p>
+        </div>
+    </div>
+    <div class="container">
+        <h2 class="text-center">Les biens publiés recemment !</h2>
+        <div class="row flex ">
+            {% for property in properties %}
+                <div class="col-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{{ path('property.show', {id: property.id, slug :property.slug}) }}">
+                                    {{ property.title }}</a>
+                            </h5>
+                            <p class="card-text">
+                                {{ property.rooms }} pièces - {{ property.surface }} m²
+                            </p>
+                            <p class="card-text">
+                                {{ property.city }} ({{ property.postalCode }})
+                            </p>
+                            <div class="text-primary" style="font-weight: bold; font-size: 2rem;">
+                                {{ property.formatedPrice }} €
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            {% else %}
+                Aucun bien de publié pour le moment.
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
