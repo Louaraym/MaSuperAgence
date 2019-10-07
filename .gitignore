@@ -22,3 +22,7 @@
 ###> liip/imagine-bundle ###
 /public/media/cache/
 ###< liip/imagine-bundle ###
+config/packages/liip_imagine.yaml
+config/routes/liip_imagine.yaml
+public/images/properties/5d94b75a247f8381522102.jpg
+public/images/properties/5d94b7de5bff0164959102.jpg
