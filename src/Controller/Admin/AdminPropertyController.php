@@ -5,7 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Property;
 use App\Form\PropertyType;
 use App\Repository\PropertyRepository;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,11 +23,11 @@ class AdminPropertyController extends AbstractController
     private $repository;
     /**
 
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     private $manager;
 
-    public function __construct(PropertyRepository $repository, ObjectManager $manager)
+    public function __construct(PropertyRepository $repository, EntityManagerInterface $manager)
     {
         $this->repository = $repository;
         $this->manager = $manager;

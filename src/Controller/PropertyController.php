@@ -6,7 +6,6 @@ use App\Entity\Property;
 use App\Entity\PropertySearch;
 use App\Form\PropertySearchType;
 use App\Repository\PropertyRepository;
-use Doctrine\Common\Persistence\ObjectManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,15 +19,9 @@ class PropertyController extends AbstractController
      */
     private $repository;
 
-    /**
-     * @var ObjectManager
-     */
-    private $manager;
-
-    public function __construct(PropertyRepository $repository, ObjectManager $manager)
+    public function __construct(PropertyRepository $repository)
     {
         $this->repository = $repository;
-        $this->manager = $manager;
     }
 
     /**
