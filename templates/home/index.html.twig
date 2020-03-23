@@ -3,7 +3,7 @@
 {% block body %}
     <div class="jumbotron text-center">
         <div class="container">
-            <h1>Bienvenue sur  Ma Super Agence !</h1>
+            <h1>Bienvenue dans votre Agence !</h1>
             <p>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium asperiores, facere iusto odit optio sed
                 voluptate? Autem deserunt distinctio iure laudantium, minus nam, nemo nihil nobis nostrum praesentium quisquam
@@ -12,20 +12,24 @@
         </div>
     </div>
     <div class="container">
-        <h2 class="text-center">Les biens publiés recemment !</h2>
-        <div class="row flex ">
+        <h2 class="text-center">Les derniers biens publiés !</h2>
+        <hr>
+        <div class="row">
             {% for property in properties %}
-                <div class="col-3">
-                    <div class="card">
+                <div class="col-md-4 col-lg-3 mb-3">
+                    <div class="card h-100 ">
                         {% if property.filename %}
-                            <img src="{{ vich_uploader_asset(property, 'imageFile') | imagine_filter('thumb') }}" alt="card-img-top" style="width: 100%; height: auto">
+                            <a href="{{ path('property.show', {id: property.id, slug :property.slug}) }}">
+                                <img src="{{ vich_uploader_asset(property, 'imageFile') | imagine_filter('thumb') }}" alt="image du bien" class="card-img-top" >
+                            </a>
                         {% else %}
-                            <img src="{{ '/images/properties/empty.jpg' | imagine_filter('thumb') }}" alt="card-img-top" style="width: 100%; height: auto">
+                            <a href="{{ path('property.show', {id: property.id, slug :property.slug}) }}">
+                                <img src="{{ '/images/properties/empty.jpg' | imagine_filter('thumb') }}" alt="image du bien" class="card-img-top" >
+                            </a>
                         {% endif %}
                         <div class="card-body">
                             <h5 class="card-title">
-                                <a href="{{ path('property.show', {id: property.id, slug :property.slug}) }}">
-                                    {{ property.title }}</a>
+                                    {{ property.title }}
                             </h5>
                             <p class="card-text">
                                 {{ property.rooms }} pièces - {{ property.surface }} m²
@@ -33,9 +37,10 @@
                             <p class="card-text">
                                 {{ property.city }} ({{ property.postalCode }})
                             </p>
-                            <div class="text-primary" style="font-weight: bold; font-size: 2rem;">
+                            <div style="font-weight: bold; font-size: 1.5rem;">
                                 {{ property.formatedPrice }} €
-                            </div>
+                            </div><br>
+                            <a  href="{{ path('property.show', {id: property.id, slug :property.slug}) }}" class="btn btn-primary ">Voir le bien</a>
                         </div>
                     </div>
                 </div>

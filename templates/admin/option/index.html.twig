@@ -3,7 +3,7 @@
 {% block title %}Espace administrateur{% endblock %}
 
 {% block body %}
-    <div class="container mt-4">
+    <div class="container mt-4" style="margin-bottom: 100px">
         <h1 class="text-center">Gérer les options</h1>
 
         {% for message in app.flashes('success') %}
@@ -11,7 +11,9 @@
                 {{ message }}
             </div>
         {% endfor %}
-
+        <div class="text-right mb-4">
+            <a href="{{ path('admin.option.new') }}" class="btn btn-primary">Créer une nouvelle option</a>
+        </div>
         <table class="table table-striped">
             <thead>
             <tr>
@@ -35,15 +37,11 @@
                 </tr>
 
             {% else %}
-                Aucun bien de publié pour le moment.
+                <div class="empty" style="margin: 20px auto">
+                    Aucune option de disponible pour le moment.
+                </div>
             {% endfor %}
             </tbody>
         </table>
-        <div class="text-right">
-            <a href="{{ path('admin.option.new') }}" class="btn btn-primary">Créer une nouvelle option</a>
-        </div>
-       {# <div class="pagination">
-            {{ knp_pagination_render(options) }}
-        </div>#}
     </div>
 {% endblock %}

@@ -4,34 +4,61 @@
 
 {% block body %}
 
-    <div class="container">
         <div class="jumbotron">
-            <div class="row">
-                <div class="col-md-8">
-                    {% if property.filename %}
-                        <img src="{{ vich_uploader_asset(property, 'imageFile') | imagine_filter('thumb') }}" alt="card-img-top" style="width: 100%; height: auto">
-                    {% else %}
-                        <img src="{{ '/images/properties/empty.jpg' | imagine_filter('thumb') }}" alt="card-img-top" style="width: 100%; height: auto">
-                    {% endif %}
+            <div class="container">
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success text-center">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                {% if not form.vars.valid %}
+                    <div class="alert alert-danger">
+                        <p>Votre message n'a pas pu être envoyé suite à une erreur de remplissage !</p>
+                    </div>
+                {% endif %}
+                <div class="row">
+                    <div class="col-md-8">
+                        {% if property.filename %}
+                            <img src="{{ vich_uploader_asset(property, 'imageFile') | imagine_filter('thumb') }}" alt="image du bien" >
+                        {% else %}
+                            <img src="{{ '/images/properties/empty.jpg' | imagine_filter('thumb') }}" alt="image du bien" style="width: 100%; height: auto">
+                        {% endif %}
+                    </div>
+                    <div class="col-md-4">
+                        <h1>{{ property.title }}</h1>
+                        <h2>{{ property.rooms }} pièces -{{ property.surface }} m²</h2>
+                        <div class="text-primary" style="font-weight: bold; font-size: 2rem;">
+                            {{ property.formatedPrice }} €</div>
+                        <a href="#" class="btn btn-primary" id="contact-button" {% if form.vars.submitted %} style="display: none" {% endif %}>Contacter l'agence</a>
+                        <div id="contact-form" class="mt-4" {% if not form.vars.submitted %} style="display: none" {% endif %}>
+                            {{ form_start(form) }}
+                            <div class="row">
+                                <div class="col">{{ form_row(form.firstName) }}</div>
+                                <div class="col">{{ form_row(form.lastName) }}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col">{{ form_row(form.phoneNumber) }}</div>
+                                <div class="col">{{ form_row(form.email) }}</div>
+                            </div>
+                            {{form_rest(form)}}
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Envoyer</button>
+                            </div>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <h1>{{ property.title }}</h1>
-                    <h2>{{ property.rooms }} pièces -{{ property.surface }} m²</h2>
-                    <div class="text-primary" style="font-weight: bold; font-size: 2rem;">
-                        {{ property.formatedPrice }} €</div>
-                    <a href="#" class="btn btn-primary">Contacter l'agence</a>
-                </div>
-            </div>
         </div>
     </div>
-    <div class="container mt-4">
+    <div class="container mt-4 mb-4">
             <nav class="nav nav-tabs" id="tab"></nav>
+            <h2>Descriptif :</h2>
             <p>
                 {{ property.description | nl2br }}
             </p>
             <div class="row">
                 <div class="col-md-8">
-                    <h2>Caractéristiques</h2>
+                    <h2>Caractéristiques :</h2>
                     <table class="table-striped">
                         <tr>
                             <td>Surface habitable</td>
@@ -56,7 +83,7 @@
                     </table>
                 </div>
                 <div class="col-md-4">
-                    <h2>Spécificités</h2>
+                    <h2>Spécificités :</h2>
                     <ul class="list-group">
                         {% for option in property.options %}
                             <li class="list-group-item">
@@ -68,4 +95,9 @@
             </div>
     </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/hidenContactForm.js') }}"></script>
 {% endblock %}

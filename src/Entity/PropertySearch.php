@@ -10,6 +10,9 @@ class PropertySearch
 {
     /**
      * @var int|null
+     *      * @Assert\Range(
+     *      min = 100000,
+     * )
      */
     private $maxPrice;
 
@@ -21,11 +24,6 @@ class PropertySearch
      * )
      */
     private $minSurface;
-
-    /**
-     * @var arrayCollection
-     */
-    private  $options;
 
     /**
      * @param ArrayCollection
@@ -70,25 +68,5 @@ class PropertySearch
         $this->minSurface = $minSurface;
         return $this;
     }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getOptions(): ArrayCollection
-    {
-        return $this->options;
-    }
-
-    /**
-     * @param ArrayCollection $options
-     * @return PropertySearch
-     */
-    public function setOptions(ArrayCollection $options): PropertySearch
-    {
-        $this->options = $options;
-        return $this;
-    }
-
-
 
 }

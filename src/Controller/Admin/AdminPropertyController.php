@@ -6,7 +6,9 @@ use App\Entity\Property;
 use App\Form\PropertyType;
 use App\Repository\PropertyRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/admin")
+ * @IsGranted("ROLE_ADMIN")
  */
 class AdminPropertyController extends AbstractController
 {
@@ -82,6 +85,7 @@ class AdminPropertyController extends AbstractController
      * @param Property $property
      * @param Request $request
      * @return Response
+     * @throws Exception
      */
     public function edit(Property $property, Request $request): Response
     {
@@ -89,9 +93,7 @@ class AdminPropertyController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
-          /*  if ($property->getImageFile() instanceof UploadedFile){
-                $cacheManager->remove($uploaderHelper->asset($property, 'imageFile'));
-            }*/
+            $property->setUpdatedAt(new \DateTime());
             $this->manager->flush();
             $this->addFlash('success', 'Votre modification a été effectuée avec succès !');
             return  $this->redirectToRoute('admin.property.index');

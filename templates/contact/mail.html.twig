@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact agence</title>
+</head>
+<body>
+        <h5>Prénom:     <span>{{ contact.firstName }}</span></h5>
+        <h5>Nom:         <span>{{contact.lastName}}</span></h5>
+        <h5>Email:       <span>{{ contact.email }}</span></h5>
+        <h5>Téléphone:  <span>{{ contact.phoneNumber }}</span></h5>
+        <h5>Le bien:    <span> <a href="{{ absolute_url( path('property.show', {'id': contact.property.id, 'slug': contact.property.slug})) }}"> {{contact.property.title}}</a></span><br></h5>
+        <h5>Message:</h5>
+        <p>{{ contact.message | nl2br }}</p>
+</body>
+</html>

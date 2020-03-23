@@ -1,23 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Voir nos biens{% endblock %}
+{% block title %}Nos biens{% endblock %}
 
 {% block body %}
 
     <div class="jumbotron">
         <div class="container">
             {{ form_start(form) }}
-            <div class="form-row align-items-end">
-                <div class="col">
+            <div class="form-row">
+                <div class="col-lg-5">
                     {{ form_row(form.minSurface) }}
                 </div>
-                <div class="col">
+                <div class="col-lg-5">
                     {{ form_row(form.maxPrice) }}
                 </div>
-                <div class="col">
-                    {{ form_row(form.options) }}
-                </div>
-                <div class="col">
+                <div class="col-lg-2">
                     <div class="form-group">
                         <button class="btn btn-primary">Rechercher</button>
                     </div>
@@ -26,13 +23,18 @@
             {{ form_end(form) }}
         </div>
     </div>
-        <div class="container mt-4 text-center">
-            <h1>Voir tous nos biens</h1>
+        <div class="container mt-4">
+            <h1 class="text-center">Tous nos biens</h1>
+            <hr>
            <div class="row">
                {% for property in properties %}
-                   <div class="col-md-3">
+                   <div class="col-md-4 col-lg-3 mb-3">
                        {% include 'Property/_property.html.twig' %}
                    </div>
+               {% else %}
+                  <div class="empty" style="margin: 20px auto">
+                      Aucun bien de disponible pour le moment.
+                  </div>
                {% endfor %}
            </div>
             <div class="pagination text-center">

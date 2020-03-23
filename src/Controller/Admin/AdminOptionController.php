@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Option;
 use App\Form\OptionType;
 use App\Repository\OptionRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/admin/option")
+ * @IsGranted("ROLE_ADMIN")
  */
 class AdminOptionController extends AbstractController
 {

@@ -12,7 +12,7 @@ class PropertyFixtures extends Fixture
     {
         $faker = \Faker\Factory::create('fr_FR');
 
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 120; $i++) {
             $property = new Property();
             $property
                  ->setTitle($faker->words($nb = 3, $asText = true))
@@ -25,8 +25,9 @@ class PropertyFixtures extends Fixture
                  ->setAddress($faker->address)
                  ->setCity($faker->city)
                  ->setPostalCode($faker->postcode)
-                 ->setDescription($faker->sentences($nb = 3, $asText = true))
-                 ->setSold(false);
+                 ->setDescription($faker->sentences($nb = 5, $asText = true))
+                 ->setSold(false)
+            ;
 
             $manager->persist($property);
         }

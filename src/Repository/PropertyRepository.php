@@ -42,17 +42,6 @@ class PropertyRepository extends ServiceEntityRepository
                 ->setParameter('minSurface', $search->getMinSurface());
         }
 
-        if ($search->getOptions()->count() > 0){
-            $k = 0;
-            foreach ($search->getOptions() as  $option){
-                $k++;
-                $query = $query
-                    ->andWhere(":option$k MEMBER of p.options")
-                    ->setParameter("option$k", $option);
-            }
-
-        }
-
         return $query->getQuery();
     }
 
@@ -62,7 +51,7 @@ class PropertyRepository extends ServiceEntityRepository
     public function findLatest(): array
     {
         return $this->findVisibleQuery()
-            ->setMaxResults(4)
+            ->setMaxResults(8)
             ->getQuery()
             ->getResult();
     }

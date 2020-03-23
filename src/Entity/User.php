@@ -47,6 +47,11 @@ class User implements UserInterface, \Serializable
      */
     public $confirm_password;
 
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,8 +109,18 @@ class User implements UserInterface, \Serializable
      */
     public function getRoles(): array
     {
-       return ['ROLE_ADMIN'];
-        //return ['ROLE_USER'];
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
     }
 
     /**
@@ -131,6 +146,7 @@ class User implements UserInterface, \Serializable
         // TODO: Implement eraseCredentials() method.
     }
 
+
     /**
      * String representation of object
      * @link https://php.net/manual/en/serializable.serialize.php
@@ -139,12 +155,12 @@ class User implements UserInterface, \Serializable
      */
     public function serialize()
     {
-       return serialize([
-           $this->id,
-           $this->username,
-           $this->email,
-           $this->password
-       ]);
+        return serialize([
+            $this->id,
+            $this->username,
+            $this->email,
+            $this->password
+        ]);
     }
 
     /**
@@ -163,6 +179,7 @@ class User implements UserInterface, \Serializable
             $this->username,
             $this->email,
             $this->password
-             ) = unserialize($serialized, ['allowed_class' => false]);
+            ) = unserialize($serialized, ['allowed_class' => false]);
     }
+
 }
