@@ -29,7 +29,33 @@
            <div class="row">
                {% for property in properties %}
                    <div class="col-md-4 col-lg-3 mb-3">
-                       {% include 'Property/_property.html.twig' %}
+{#                       {% include 'Property/_property.html.twig' %}#}
+                       <div class="card h-100">
+                           {% if property.filename %}
+                               <a href="{{ path('property.show', {id: property.id, slug :property.slug}) }}">
+                                   <img src="{{ vich_uploader_asset(property, 'imageFile') | imagine_filter('thumb') }}" alt="imape du bien" class="card-img-top" >
+                               </a>
+                           {% else %}
+                               <a href="{{ path('property.show', {id: property.id, slug :property.slug}) }}">
+                                   <img src="{{ '/images/properties/empty.jpg' | imagine_filter('thumb') }}" alt="image du bien" class="card-img-top" >
+                               </a>
+                           {% endif %}
+                           <div class="card-body">
+                               <h5 class="card-title">
+                                   {{ property.title }}
+                               </h5>
+                               <p class="card-text">
+                                   {{ property.rooms }} pièces - {{ property.surface }} m²
+                               </p>
+                               <p class="card-text">
+                                   {{ property.city }} ({{ property.postalCode }})
+                               </p>
+                               <div style="font-size: 1.5em; font-weight: bold">
+                                   {{ property.formatedPrice }} €
+                               </div><br>
+                               <a  href="{{ path('property.show', {id: property.id, slug :property.slug}) }}" class="btn btn-primary ">Voir le bien</a>
+                           </div>
+                       </div>
                    </div>
                {% else %}
                   <div class="empty" style="margin: 20px auto">
