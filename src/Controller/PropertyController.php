@@ -33,7 +33,7 @@ class PropertyController extends AbstractController
      * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function index(Request $request,  PaginatorInterface $paginator): Response
+    public function index(Request $request, PaginatorInterface $paginator): Response
     {
         $search = new PropertySearch();
         $form = $this->createForm(PropertySearchType::class, $search);
